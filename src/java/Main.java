@@ -1,8 +1,9 @@
 import java.sql.*; 
 import java.util.*; 
 
-// mysql-connector-java-8.0.13.jar has to be in the same folder in order for the following command to work:
+// mysql-connector-java-8.0.13.jar (or ver. 5.1.44 if using MySQL 5) has to be in the same folder in order for the following command to work:
 // javac -cp .:mysql-connector-java-8.0.13.jar Main.java && java -cp .:mysql-connector-java-8.0.13.jar Main
+//javac -cp .:mysql-connector-java-5.1.44.jar Main.java && java -cp .:mysql-connector-java-5.1.44.jar Main
 
 public class Main {
 	public static void main(String[] args) {
