@@ -212,6 +212,34 @@ public class DBJDBCM
         stmt.close();
     }
 
+    private static void changeColour(Connection con, String regno, String colour) throws Exception {
+        //validate regno and colour.
+        if (regno == null || regno.isEmpty() || colour == null || colour.isEmpty() ) {
+            System.out.println("You need to provide a valid reg no. or colour.");
+            return;
+        }
+
+        //check if regno exists. Use ? as placeholder.
+        String query = "SELECT * FROM bil WHERE regnr = ?";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, regno);
+        ResultSet rs = stmt.executeQuery();
+        if (!rs.next() ) {
+            System.out.println("Bummer! No car found with provided reg no.");
+            stmt.close();
+            return;
+        }
+
+        //change car colour to user provided colour.
+        query = "UPDATE bil SET farg = ? WHERE regnr = ?";
+        stmt = con.prepareStatement(query);
+        stmt.setString(1, colour);
+        stmt.setString(2, regno);
+        stmt.executeUpdate();
+        System.out.println("Successfully changed the colour to " + colour + "!");
+        stmt.close();
+    }
+
 
 	public static void main(String[] args) {
 		Connection con = null;
@@ -233,7 +261,7 @@ public class DBJDBCM
 						if (args.length < 3) {
 							System.out.println("Usage: changeColour <reg no.> <new colour>");
 						} else {
-							// changeColour(con, args[1], args[2]);
+							changeColour(con, args[1], args[2]);
 						}
 						break;
 					case "help":
