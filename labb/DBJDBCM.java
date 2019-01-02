@@ -203,6 +203,15 @@ public class DBJDBCM
         stmt.close();
     }
 
+    private static void showCars(Connection con) throws Exception {
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT regnr, marke, farg FROM bil");
+        while(rs.next()) {
+            System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
+        }
+        stmt.close();
+    }
+
 
 	public static void main(String[] args) {
 		Connection con = null;
@@ -218,7 +227,7 @@ public class DBJDBCM
 						showCarBrands(con);
 						break;
 					case "showCars":
-                        // showCars(con);
+                        showCars(con);
 						break;
 					case "changeColour":
 						if (args.length < 3) {
