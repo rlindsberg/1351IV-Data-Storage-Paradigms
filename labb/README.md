@@ -32,3 +32,34 @@ program. Detta är dock frivilligt.
 
 4. Kör programmet och visa/förklara koden för en av handledarna för att få godkänt på
 labben.
+
+
+
+
+UPDATE mysql.user SET Password=PASSWORD('bunny') WHERE User='root';
+FLUSH PRIVILEGES;
+
+
+javac -cp .:mysql-connector-java-5.1.44.jar DBJDBCM.java && java -cp .:mysql-connector-java-5.1.44.jar DBJDBCM
+
+javac -cp .:mysql-connector-java-5.1.44.jar Main.java && java -cp .:mysql-connector-java-5.1.44.jar Main addlang
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
