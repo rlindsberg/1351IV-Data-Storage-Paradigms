@@ -6,11 +6,19 @@
  **
  ** There is no error management in this program.
  ** Instead an exception is thrown. Ideally all exceptions
- ** should be caught and managed appropriately. But this 
+ ** should be caught and managed appropriately. But this
  ** program's goal is only to illustrate the basic JDBC classes.
  **
  ** Last modified by nikos on 2015-10-07
  */
+
+/**
+* Solution to lab assignments
+*
+* @author  Roderick Karlemstrand
+* @version 1.0
+* @since   2019-01-02
+*/
 
 import java.sql.*;
 
@@ -20,7 +28,7 @@ public class DBJDBCM
     // DB connection variable
     static protected Connection con;
     // DB access variables
-    private String URL = "jdbc:mysql:///labb";
+    private String URL = "jdbc:mysql://localhost:3306/labb";
     private String driver = "com.mysql.jdbc.Driver";
     private String userID = "root";
     private String password = "bunny";
@@ -176,24 +184,85 @@ public class DBJDBCM
         stmt.close();
     }
 
-    public static void main(String[] argv) throws Exception
-    {
-        // Create a new object of this class.
-        DBJDBCM t = new DBJDBCM();
 
-        // Call methods on the object t.
-		  System.out.println("-------- connect() ---------");
-        t.connect();
-		  System.out.println("-------- simpleselect() ---------");
-        t.simpleselect();
-		  System.out.println("-------- parameterizedselect() ---------");
-        t.parameterizedselect();
-		  System.out.println("-------- insert() ---------");
-        t.insert();
+    private static void printHelp() {
+		System.out.println("Usage: <command> <args>");
+		System.out.println("v-- Examples --v");
+		System.out.println("To see all car brands: \t\t\t\"showCarBrands\"");
+		System.out.println("To see all cars: \t\t\t\"showCars\"");
+		System.out.println("To change a car's colour: \t\t\"changeColour ABC123 vit\"");
+	}
 
-        // Commit the changes made to the database through this connection.
-        con.commit();
-        // Close the connection.
-        con.close();
+    private static void showCarBrands(Connection con) throws Exception {
+        System.out.println("Here is a list of all car brands.");
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT farg FROM bil");
+        while (rs.next()) {
+            System.out.println(rs.getString(1));
+        }
+        stmt.close();
     }
+
+
+	public static void main(String[] args) {
+		Connection con = null;
+		try {
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/labb","root","bunny");
+				if (args.length < 1) {
+					printHelp();
+					return;
+				}
+				final String cmd = args[0];
+				switch (cmd) {
+					case "showCarBrands":
+						showCarBrands(con);
+						break;
+					case "showCars":
+                        // showCars(con);
+						break;
+					case "changeColour":
+						if (args.length < 3) {
+							System.out.println("Usage: changeColour <reg no.> <new colour>");
+						} else {
+							// changeColour(con, args[1], args[2]);
+						}
+						break;
+					case "help":
+					default:
+						printHelp();
+						return;
+				}
+				//con.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+	}
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
