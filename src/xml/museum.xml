@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<museum>
+	<guides>
+		<guide>
+			<ssn>123456-7890</ssn>
+			<name>Jani Belos</name>
+			<languages>
+				<language>
+					<name>French</name>
+				</language>
+				<language>
+					<name>Spanish</name>
+				</language>	
+				<language>
+					<name>Russian</name>
+				</language>							
+			</languages>
+		</guide>
+		<guide>
+			<ssn>412912-1415</ssn>
+			<name>Orby Belos</name>
+			<languages>
+				<language>
+					<name>English</name>
+				</language>
+				<language>
+					<name>Swedish</name>
+				</language>
+				<language>
+					<name>German</name>
+				</language>							
+			</languages>
+		</guide>
+		<guide>
+			<ssn>982647-2322</ssn>
+			<name>Mani Pani</name>
+			<languages>
+				<language>
+					<name>German</name>
+				</language>
+				<language>
+					<name>Spanish</name>
+				</language>			
+			</languages>
+		</guide>	
+	</guides>
+	<exhibitions>
+		<exhibition>
+			<id>1</id>
+			<name>Grand opening</name>
+			<start>2018-11-30</start>
+			<end>2018-11-30</end>
+			<size>150</size>
+			<competent-guides>
+				<guide>
+					<ssn>982647-2322</ssn>
+					<name>Mani Pani</name>
+					<languages>
+						<language>
+							<name>German</name>
+						</language>
+						<language>
+							<name>Spanish</name>
+						</language>			
+					</languages>
+				</guide>
+				<guide>
+					<ssn>123456-7890</ssn>
+					<name>Jani Belos</name>
+					<languages>
+						<language>
+							<name>French</name>
+						</language>
+						<language>
+							<name>Spanish</name>
+						</language>	
+						<language>
+							<name>Russian</name>
+						</language>							
+					</languages>
+				</guide>						
+			</competent-guides>
+		</exhibition>
+		<exhibition>
+			<id>2</id>
+			<name>The new year</name>
+			<start>2018-12-31</start>
+			<end>2019-01-01</end>
+			<size>200</size>
+			<competent-guides>
+				<guide>
+					<ssn>982647-2322</ssn>
+					<name>Mani Pani</name>
+					<languages>
+						<language>
+							<name>German</name>
+						</language>
+						<language>
+							<name>Spanish</name>
+						</language>			
+					</languages>
+				</guide>
+				<guide>
+					<ssn>412912-1415</ssn>
+					<name>Orby Belos</name>
+					<languages>
+						<language>
+							<name>English</name>
+						</language>
+						<language>
+							<name>Swedish</name>
+						</language>
+						<language>
+							<name>German</name>
+						</language>							
+					</languages>
+				</guide>						
+			</competent-guides>
+		</exhibition>	
+	</exhibitions>
+	<tours>
+		<tour>
+		    <exhibition>
+				<id>1</id>
+				<name>Grand opening</name>
+				<start>2018-11-30</start>
+				<end>2018-11-30</end>
+				<size>150</size>
+			</exhibition>
+			<guide>
+				<ssn>982647-2322</ssn>
+				<name>Mani Pani</name>
+			</guide>
+			<language>
+				<name>Spanish</name>
+			</language>
+			<date>2018-11-30</date>
+            <start>14:00</start>
+		</tour>
+		<tour>
+		    <exhibition>
+				<id>1</id>
+				<name>Grand opening</name>
+				<start>2018-11-30</start>
+				<end>2018-11-30</end>
+				<size>150</size>
+			</exhibition>
+			<guide>
+				<ssn>982647-2322</ssn>
+				<name>Mani Pani</name>
+			</guide>
+			<language>
+				<name>Spanish</name>
+			</language>
+			<date>2018-11-30</date>
+            <start>17:00</start>
+		</tour>	
+		<tour>
+		    <exhibition>
+				<id>1</id>
+				<name>Grand opening</name>
+				<start>2018-11-30</start>
+				<end>2018-11-30</end>
+				<size>150</size>
+			</exhibition>
+			<guide>
+				<ssn>123456-7890</ssn>
+				<name>Jani Belos</name>
+			</guide>
+			<language>
+				<name>Russian</name>
+			</language>
+			<date>2018-11-30</date>
+            <start>10:00</start>
+		</tour>
+		<tour>
+			<exhibition>
+				<id>2</id>
+				<name>The new year</name>
+				<start>2018-12-31</start>
+				<end>2019-01-01</end>
+				<size>200</size>
+			</exhibition>
+			<guide>
+				<ssn>412912-1415</ssn>
+				<name>Orby Belos</name>
+			</guide>
+			<language>
+				<name>English</name>
+			</language>
+			<date>2018-12-31</date>
+            <start>10:00</start>						
+		</tour>
+		<tour>
+			<exhibition>
+				<id>2</id>
+				<name>The new year</name>
+				<start>2018-12-31</start>
+				<end>2019-01-01</end>
+				<size>200</size>
+			</exhibition>
+			<guide>
+				<ssn>412912-1415</ssn>
+				<name>Orby Belos</name>
+			</guide>
+			<language>
+				<name>English</name>
+			</language>
+			<date>2018-12-31</date>
+            <start>12:00</start>						
+		</tour>
+		<tour>
+			<exhibition>
+				<id>2</id>
+				<name>The new year</name>
+				<start>2018-12-31</start>
+				<end>2019-01-01</end>
+				<size>200</size>
+			</exhibition>
+			<guide>
+				<ssn>412912-1415</ssn>
+				<name>Orby Belos</name>
+			</guide>
+			<language>
+				<name>English</name>
+			</language>
+			<date>2019-01-01</date>
+            <start>14:00</start>						
+		</tour>
+		<tour>
+			<exhibition>
+				<id>2</id>
+				<name>The new year</name>
+				<start>2018-12-31</start>
+				<end>2019-01-01</end>
+				<size>200</size>
+			</exhibition>
+			<guide>
+				<ssn>982647-2322</ssn>
+				<name>Mani Pani</name>
+			</guide>
+			<language>
+				<name>Spanish</name>
+			</language>
+			<date>2019-01-01</date>
+            <start>16:00</start>						
+		</tour>											
+	</tours>
+</museum>

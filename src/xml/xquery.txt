@@ -1,0 +1,44 @@
+Namn på guider som kan franska?
+<Results>
+{
+    for $g in doc("museum")/guides/guide
+    where $g/languages/language/name = "French"
+    return <Guide name="{$g/name}"/>
+}
+</Results>
+Antalet guider som kan respektive språk.
+<Results>
+{
+let $doc := doc("museum")
+let $langs := distinct-values(for $lang in $doc/guides/guide/languages/language/name
+return $lang)
+for $lang in $langs
+return <Language name="{$lang}" count="{count($doc/guides/guide/languages/language[name=$lang])}"/>
+}
+</Results>
+Ta fram namn på guider som kan både spanska och tyska.
+<Results>
+{
+  let $doc := doc("museum")
+  let $spa := for $g in $doc/guides/guide
+  where $g/languages/language[name="Spanish"]
+  return $g 
+  for $g in $spa
+  where $g/languages/language[name="German"]
+  return <Guide name="{$g/name}"/>
+}
+</Results> 
+Ta fram utställningar och vilka guider som är kompetenta för varje utställning! Varje utställning skall ha ett element med ett sub-element för varje kompetent guide.
+<Results>
+{
+  for $e in doc("museum")/museum/exhibitions/exhibition
+  return 
+  <Exhibition name="{$e/name}">
+  {
+    for $g in $e/competent-guides/guide
+    return <Guide name="{$g/name}"/>
+  }
+  </Exhibition>
+}
+</Results>
+
