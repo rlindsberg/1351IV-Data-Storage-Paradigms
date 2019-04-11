@@ -1,6 +1,6 @@
 1.
 SELECT guide_language.name FROM (guide_language
-JOIN guide ON guide.social_sec_no = guide_language.social_sec_no)
+LEFT JOIN guide ON guide.social_sec_no = guide_language.social_sec_no)
 WHERE (language = 'English' OR language = 'German')
 GROUP BY name HAVING count(*) > 1;
 
