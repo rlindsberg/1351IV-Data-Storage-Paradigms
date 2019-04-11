@@ -90,7 +90,7 @@ CREATE TABLE artist (
 );
 
 INSERT INTO artist (name, description, date_of_birth, date_of_death, image_url)
-VALUES 
+VALUES
 ('Salvador Dalí', 'I am drugs', '1904-05-11', '1989-01-23', 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg'),
 ('Pablo Picasso', 'Everything you can imagine is real', '1881-10-25', '1973-4-8', 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Pablo_picasso.jpg'),
 ('Frida Kahlo de Rivera', 'I hope the leaving is joyful; and I hope never to return.', '1907-7-6', '1954-7-3', 'http://www.fridakahlo.org/images/frida-kahlo-picture.jpg');
@@ -106,10 +106,11 @@ CREATE TABLE artwork (
 	artwork_type VARCHAR(255),
 	FOREIGN KEY artist_artwork_fk(artist_id) REFERENCES artist(id)
 	ON UPDATE CASCADE
-	ON DELETE RESTRICT,	
+	ON DELETE RESTRICT,
 	FOREIGN KEY artwork_type_fk(artwork_type) REFERENCES artwork_type(name)
 	ON UPDATE CASCADE
-	ON DELETE RESTRICT
+	ON DELETE RESTRICT,
+	UNIQUE KEY (artwork_id, name)
 );
 
 INSERT INTO artwork (artist_id, name, description, size, created_at, artwork_type)
@@ -122,8 +123,8 @@ VALUES
 CREATE TABLE product (
 	barcode VARCHAR(255) PRIMARY KEY,
 	price INT NOT NULL,
-	type VARCHAR(255) NOT NULL,	
-	size VARCHAR(255),	
+	type VARCHAR(255) NOT NULL,
+	size VARCHAR(255),
 	color VARCHAR(255),
 	FOREIGN KEY product_type_fk(type) REFERENCES product_type(name)
 	ON UPDATE CASCADE
@@ -133,7 +134,7 @@ CREATE TABLE product (
 	ON DELETE RESTRICT,
 	FOREIGN KEY product_size_fk(size) REFERENCES product_size(name)
 	ON UPDATE CASCADE
-	ON DELETE RESTRICT			
+	ON DELETE RESTRICT
 );
 
 CREATE TABLE product_artwork (
@@ -145,7 +146,7 @@ CREATE TABLE product_artwork (
 	ON DELETE RESTRICT,
 	FOREIGN KEY artwork_product_barcode(product_barcode) REFERENCES product(barcode)
 	ON UPDATE CASCADE
-	ON DELETE RESTRICT	 	
+	ON DELETE RESTRICT
 );
 
 INSERT INTO product (barcode, price, type, size, color)
@@ -169,7 +170,8 @@ CREATE TABLE exhibition (
 	name  VARCHAR(255) NOT NULL,
 	start DATE NOT NULL,
 	end DATE NOT NULL,
-	size INT NOT NULL
+	size INT NOT NULL,
+	UNIQUE KEY (name, start, end)
 );
 
 CREATE TABLE artwork_exhibition (
@@ -205,7 +207,7 @@ CREATE TABLE exhibition_guide (
 	ON DELETE RESTRICT,
 	FOREIGN KEY eg_exhibition(exhibition_id) REFERENCES exhibition(id)
 	ON UPDATE CASCADE
-	ON DELETE RESTRICT	
+	ON DELETE RESTRICT
 );
 
 INSERT INTO exhibition_guide (social_sec_no, exhibition_id) VALUES
@@ -213,13 +215,13 @@ INSERT INTO exhibition_guide (social_sec_no, exhibition_id) VALUES
 ('123456-7890', 2),
 ('234567-8901', 2);
 
-CREATE TABLE guided_tour (
+CREATE TABLE tour (
 	exhibition_id INT NOT NULL,
 	guide_social_sec_no VARCHAR(255) NOT NULL,
     language VARCHAR(255) NOT NULL,
     start TIMESTAMP NOT NULL,
     end TIMESTAMP NOT NULL,
-    PRIMARY KEY (guide_social_sec_no, start),
+    PRIMARY KEY (guide_social_sec_no, start, end),
     FOREIGN KEY gt_exhibition(exhibition_id) REFERENCES exhibition(id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT,
@@ -231,9 +233,8 @@ CREATE TABLE guided_tour (
     ON DELETE RESTRICT
 );
 
-INSERT INTO guided_tour (exhibition_id, guide_social_sec_no, language, start, end) VALUES
+INSERT INTO tour (exhibition_id, guide_social_sec_no, language, start, end) VALUES
 (1, '123456-7890', 'English', '2018-11-30 10:00:00', '2018-11-30 11:00:00'),
 (1, '123456-7890', 'German', '2018-11-30 11:00:00', '2018-11-30 12:00:00'),
 (2, '123456-7890', 'English', '2018-12-31 13:00:00', '2018-12-31 14:00:00'),
 (2, '234567-8901', 'French', '2018-12-31 11:00:00', '2018-12-31 12:00:00');
-
