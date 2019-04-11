@@ -109,7 +109,8 @@ CREATE TABLE artwork (
 	ON DELETE RESTRICT,
 	FOREIGN KEY artwork_type_fk(artwork_type) REFERENCES artwork_type(name)
 	ON UPDATE CASCADE
-	ON DELETE RESTRICT
+	ON DELETE RESTRICT,
+	UNIQUE KEY (artwork_id, name)
 );
 
 INSERT INTO artwork (artist_id, name, description, size, created_at, artwork_type)
@@ -169,7 +170,8 @@ CREATE TABLE exhibition (
 	name  VARCHAR(255) NOT NULL,
 	start DATE NOT NULL,
 	end DATE NOT NULL,
-	size INT NOT NULL
+	size INT NOT NULL,
+	UNIQUE KEY (name, start, end)
 );
 
 CREATE TABLE artwork_exhibition (
@@ -213,13 +215,13 @@ INSERT INTO exhibition_guide (social_sec_no, exhibition_id) VALUES
 ('123456-7890', 2),
 ('234567-8901', 2);
 
-CREATE TABLE guided_tour (
+CREATE TABLE tour (
 	exhibition_id INT NOT NULL,
 	guide_social_sec_no VARCHAR(255) NOT NULL,
     language VARCHAR(255) NOT NULL,
     start TIMESTAMP NOT NULL,
     end TIMESTAMP NOT NULL,
-    PRIMARY KEY (guide_social_sec_no, start),
+    PRIMARY KEY (guide_social_sec_no, start, end),
     FOREIGN KEY gt_exhibition(exhibition_id) REFERENCES exhibition(id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT,
@@ -231,7 +233,7 @@ CREATE TABLE guided_tour (
     ON DELETE RESTRICT
 );
 
-INSERT INTO guided_tour (exhibition_id, guide_social_sec_no, language, start, end) VALUES
+INSERT INTO tour (exhibition_id, guide_social_sec_no, language, start, end) VALUES
 (1, '123456-7890', 'English', '2018-11-30 10:00:00', '2018-11-30 11:00:00'),
 (1, '123456-7890', 'German', '2018-11-30 11:00:00', '2018-11-30 12:00:00'),
 (2, '123456-7890', 'English', '2018-12-31 13:00:00', '2018-12-31 14:00:00'),
