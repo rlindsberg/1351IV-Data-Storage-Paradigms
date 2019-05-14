@@ -1,0 +1,56 @@
+q1
+Utifrån tabellerna i kursanvisningarna som används för lektionerna, hur många rader finns i resultatet av följande sats:
+
+SELECT namn
+FROM Lokal, Lärare
+
+Anwser:
+mysql> SELECT namn  FROM Lokal, Laerare;
++---------+
+| namn    |
++---------+
+| Jupiter |
+| Orion   |
+| Sirius  |
+| Tellus  |
+| Jupiter |
+| Orion   |
+| Sirius  |
+| Tellus  |
+| Jupiter |
+| Orion   |
+| Sirius  |
+| Tellus  |
+| Jupiter |
+| Orion   |
+| Sirius  |
+| Tellus  |
+| Jupiter |
+| Orion   |
+| Sirius  |
+| Tellus  |
++---------+
+20 rows in set (0.00 sec)
+
+
+q2
+Utifrån tabellerna i kursanvisningarna som används för lektionerna, hur många rader finns det i resultatet av följande sats:
+
+SELECT längd
+FROM Kurs
+GROUP BY längd
+HAVING AVG(pris) > 3000
+
+Anwser:
+
+mysql> SELECT laengd FROM Kurs
+    -> GROUP BY laengd
+    -> HAVING AVG(pris) > 3000;
++--------+
+| laengd |
++--------+
+|      3 |
+|      4 |
+|      5 |
++--------+
+3 rows in set (0.00 sec)
