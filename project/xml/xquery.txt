@@ -1,44 +1,88 @@
 Namn på guider som kan franska?
-<Results>
+<Result>
 {
-    for $g in doc("museum")/guides/guide
-    where $g/languages/language/name = "French"
-    return <Guide name="{$g/name}"/>
+  for $guide in doc("museum")/museum/guide
+  where $guide/languages/language/name = "French"
+  return <Guide name="{$guide/name}"/>
 }
-</Results>
+</Result>
+Svar:
+<Result>
+  <Guide name="Jani Belos"/>
+</Result>
+
+
 Antalet guider som kan respektive språk.
-<Results>
+<Result>
 {
-let $doc := doc("museum")
-let $langs := distinct-values(for $lang in $doc/guides/guide/languages/language/name
+let $doc := doc("museum")/museum
+let $langs := distinct-values(for $lang in $doc/guide/languages/language/name
 return $lang)
 for $lang in $langs
-return <Language name="{$lang}" count="{count($doc/guides/guide/languages/language[name=$lang])}"/>
+return <Language name="{$lang}" count="{count($doc/guide/languages/language[name=$lang])}"/>
 }
-</Results>
+</Result>
+Svar:
+<Result>
+  <Language name="French" count="1"/>
+  <Language name="Spanish" count="2"/>
+  <Language name="Russian" count="1"/>
+  <Language name="English" count="1"/>
+  <Language name="Swedish" count="1"/>
+  <Language name="German" count="2"/>
+</Result>
+
+
+
 Ta fram namn på guider som kan både spanska och tyska.
-<Results>
+<Result>
 {
-  let $doc := doc("museum")
-  let $spa := for $g in $doc/guides/guide
-  where $g/languages/language[name="Spanish"]
-  return $g 
+  let $doc := doc("museum")/museum
+  let $spa := for $g in $doc/guide
+    where $g/languages/language[name="Spanish"]
+    return $g 
   for $g in $spa
-  where $g/languages/language[name="German"]
-  return <Guide name="{$g/name}"/>
+    where $g/languages/language[name="German"]
+    return <Guide name="{$g/name}"/>
 }
-</Results> 
+</Result> 
+svar:
+<Result>
+  <Guide name="Mani Pani"/>
+</Result>
+
+
+
 Ta fram utställningar och vilka guider som är kompetenta för varje utställning! Varje utställning skall ha ett element med ett sub-element för varje kompetent guide.
+
 <Results>
 {
-  for $e in doc("museum")/museum/exhibitions/exhibition
+  for $e in doc("museum")/museum/exhibition
   return 
-  <Exhibition name="{$e/name}">
+  <Exhibition name="{$e/name}" start="{$e/start}" end="{$e/end}">
   {
     for $g in $e/competent-guides/guide
-    return <Guide name="{$g/name}"/>
+      return <CompetentGuide persnr="{$g/ssn}"/>
   }
   </Exhibition>
 }
 </Results>
 
+svar:
+<Results>
+  <Exhibition name="Grand opening" start="2018-11-30" end="2018-11-30">
+    <CompetentGuide persnr="982647-2322"/>
+    <CompetentGuide persnr="123456-7890"/>
+  </Exhibition>
+  <Exhibition name="The new year" start="2018-12-31" end="2019-01-01">
+    <CompetentGuide persnr="982647-2322"/>
+    <CompetentGuide persnr="412912-1415"/>
+  </Exhibition>
+  <Exhibition name="The new year" start="2019-12-31" end="2020-01-01">
+    <CompetentGuide persnr="412912-1415"/>
+  </Exhibition>
+  <Exhibition name="Evening event" start="2018-11-30" end="2018-11-30">
+    <CompetentGuide persnr="982647-2322"/>
+    <CompetentGuide persnr="123456-7890"/>
+  </Exhibition>
+</Results>
