@@ -1,0 +1,57 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT museum (guide+,exhibition+)>
+<!ATTLIST museum
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT exhibition (id,name,start,end,size,competent-guides,tour+)>
+<!ATTLIST exhibition
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT id (#PCDATA)>
+<!ATTLIST id
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT end (#PCDATA)>
+<!ATTLIST end
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT size (#PCDATA)>
+<!ATTLIST size
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT competent-guides (guide)+>
+<!ATTLIST competent-guides
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT tour (guide,language,date,start)>
+<!ATTLIST tour
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT date (#PCDATA)>
+<!ATTLIST date
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT guide (ssn,(name,languages)?)>
+<!ATTLIST guide
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT ssn (#PCDATA)>
+<!ATTLIST ssn
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT languages (language)+>
+<!ATTLIST languages
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT name (#PCDATA)>
+<!ATTLIST name
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT start (#PCDATA)>
+<!ATTLIST start
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT language (name)>
+<!ATTLIST language
+  xmlns CDATA #FIXED ''>

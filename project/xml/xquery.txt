@@ -40,12 +40,12 @@ Ta fram namn på guider som kan både spanska och tyska.
   let $doc := doc("museum")/museum
   let $spa := for $g in $doc/guide
     where $g/languages/language[name="Spanish"]
-    return $g 
+    return $g
   for $g in $spa
     where $g/languages/language[name="German"]
     return <Guide name="{$g/name}"/>
 }
-</Result> 
+</Result>
 svar:
 <Result>
   <Guide name="Mani Pani"/>
@@ -58,7 +58,7 @@ Ta fram utställningar och vilka guider som är kompetenta för varje utställni
 <Results>
 {
   for $e in doc("museum")/museum/exhibition
-  return 
+  return
   <Exhibition name="{$e/name}" start="{$e/start}" end="{$e/end}">
   {
     for $g in $e/competent-guides/guide
@@ -87,89 +87,60 @@ svar:
   </Exhibition>
 </Results>
 
---- D NIVÅ ---
-Ta fram alla guidade turer per guide. Producera ett element för varje guide med ett subelement för varjetur där tiden, språket och utställningens titel är attribut.
-
-<Results>
-{
-  let $db := doc("museum.xml")/museum
-  for $g in $db/guide
-  return 
-  <Guide ssn="{$g/ssn}" name="{$g/name}">
-  {
-    for $e in $db/exhibition
-      return
-        for $t in $e/tour 
-          where $t/guide/ssn = $g/ssn
-    return <Tour tid="{$t/start}" lang="{$t/language/name}" exhibition="{$e/name}" date="{$e/start}"/>
-  }
-  </Guide>
-}
-</Results>
-
-Svar:
-
-<Results>
-  <Guide ssn="123456-7890" name="Jani Belos">
-    <Tour tid="10:00" lang="Russian" exhibition="Grand opening" date="2018-11-30"/>
-    <Tour tid="18:00" lang="Russian" exhibition="Evening event" date="2018-11-30"/>
-  </Guide>
-  <Guide ssn="412912-1415" name="Orby Belos">
-    <Tour tid="10:00" lang="English" exhibition="The new year" date="2018-12-31"/>
-    <Tour tid="12:00" lang="English" exhibition="The new year" date="2018-12-31"/>
-    <Tour tid="14:00" lang="English" exhibition="The new year" date="2018-12-31"/>
-    <Tour tid="10:00" lang="English" exhibition="The new year" date="2019-12-31"/>
-    <Tour tid="12:00" lang="English" exhibition="The new year" date="2019-12-31"/>
-    <Tour tid="14:00" lang="English" exhibition="The new year" date="2019-12-31"/>
-  </Guide>
-  <Guide ssn="982647-2322" name="Mani Pani">
-    <Tour tid="14:00" lang="Spanish" exhibition="Grand opening" date="2018-11-30"/>
-    <Tour tid="17:00" lang="Spanish" exhibition="Grand opening" date="2018-11-30"/>
-    <Tour tid="16:00" lang="Spanish" exhibition="The new year" date="2018-12-31"/>
-    <Tour tid="19:00" lang="Spanish" exhibition="Evening event" date="2018-11-30"/>
-    <Tour tid="20:00" lang="Spanish" exhibition="Evening event" date="2018-11-30"/>
-  </Guide>
-</Results>
-
-
-Ta fram alla guidade turer per utställning, ett element per utställning med ett subelement per tur där tid, språk och guide är attribut.
+Ta fram information om guidade turer per utställning! Producera ett element per utställning med ettsubelement per datum med ett subelement per guidad tur!
 
 <Results>
 {
   let $db := doc("museum.xml")/museum
   for $e in $db/exhibition
-    return <Exhibition name="{$e/name}" date="{$e/start}">
-      {
-        for $t in $e/tour
-        return <GuidedTour tid="{$t/start}" sprak="{$t/language/name}" guide="{$t/guide/ssn}"/>
-      }   
-    </Exhibition>
-
+  return <Exhibition name="{$e/name}">
+    {
+      for $date in distinct-values($e/tour/date)
+      return <Date date="{$date}">
+        {
+         for $t in $e/tour where $t/date = $date
+         return <Tour lang="{$t/language/name}" time="{$t/start}"/>
+        }
+      </Date>
+    }
+  </Exhibition>
 }
 </Results>
 
 svar:
 
 <Results>
-  <Exhibition name="Grand opening" date="2018-11-30">
-    <GuidedTour tid="14:00" sprak="Spanish" guide="982647-2322"/>
-    <GuidedTour tid="17:00" sprak="Spanish" guide="982647-2322"/>
-    <GuidedTour tid="10:00" sprak="Russian" guide="123456-7890"/>
+  <Exhibition name="Grand opening">
+    <Date date="2018-11-30">
+      <Tour lang="Spanish" time="14:00"/>
+      <Tour lang="Spanish" time="17:00"/>
+      <Tour lang="Russian" time="10:00"/>
+    </Date>
   </Exhibition>
-  <Exhibition name="The new year" date="2018-12-31">
-    <GuidedTour tid="10:00" sprak="English" guide="412912-1415"/>
-    <GuidedTour tid="12:00" sprak="English" guide="412912-1415"/>
-    <GuidedTour tid="14:00" sprak="English" guide="412912-1415"/>
-    <GuidedTour tid="16:00" sprak="Spanish" guide="982647-2322"/>
+  <Exhibition name="The new year">
+    <Date date="2018-12-31">
+      <Tour lang="English" time="10:00"/>
+      <Tour lang="English" time="12:00"/>
+    </Date>
+    <Date date="2019-01-01">
+      <Tour lang="English" time="14:00"/>
+      <Tour lang="Spanish" time="16:00"/>
+    </Date>
   </Exhibition>
-  <Exhibition name="The new year" date="2019-12-31">
-    <GuidedTour tid="10:00" sprak="English" guide="412912-1415"/>
-    <GuidedTour tid="12:00" sprak="English" guide="412912-1415"/>
-    <GuidedTour tid="14:00" sprak="English" guide="412912-1415"/>
+  <Exhibition name="The new year">
+    <Date date="2018-12-31">
+      <Tour lang="English" time="10:00"/>
+      <Tour lang="English" time="12:00"/>
+    </Date>
+    <Date date="2019-01-01">
+      <Tour lang="English" time="14:00"/>
+    </Date>
   </Exhibition>
-  <Exhibition name="Evening event" date="2018-11-30">
-    <GuidedTour tid="19:00" sprak="Spanish" guide="982647-2322"/>
-    <GuidedTour tid="20:00" sprak="Spanish" guide="982647-2322"/>
-    <GuidedTour tid="18:00" sprak="Russian" guide="123456-7890"/>
+  <Exhibition name="Evening event">
+    <Date date="2018-11-30">
+      <Tour lang="Spanish" time="19:00"/>
+      <Tour lang="Spanish" time="20:00"/>
+      <Tour lang="Russian" time="18:00"/>
+    </Date>
   </Exhibition>
 </Results>
