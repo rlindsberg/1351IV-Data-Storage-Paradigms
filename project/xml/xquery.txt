@@ -95,12 +95,12 @@ Ta fram alla guidade turer per guide. Producera ett element för varje guide med
 {
   let $db := doc("museum.xml")/museum
   for $g in $db/guide
-  return 
+  return
   <Guide ssn="{$g/ssn}" name="{$g/name}">
   {
     for $e in $db/exhibition
       return
-        for $t in $e/tour 
+        for $t in $e/tour
           where $t/guide/ssn = $g/ssn
     return <Tour tid="{$t/start}" lang="{$t/language/name}" exhibition="{$e/name}" date="{$e/start}"/>
   }
@@ -144,7 +144,7 @@ Ta fram alla guidade turer per guide. Producera ett element för varje guide med
         for $t in $e/tour
           let $g := $db/guide[ssn eq $t/guide/ssn]
         return <GuidedTour tid="{$t/start}" sprak="{$t/language/name}" guide="{$g/name}"/>
-      }   
+      }
     </Exhibition>
 
  }
@@ -185,14 +185,10 @@ Ta fram information om guidade turer per utställning! Producera ett element per
   return <Exhibition name="{$e/name}">
     {
       for $date in distinct-values($e/tour/date)
-      return <Date date="{$date}">
-        {
          for $t in $e/tour where $t/date = $date
          let $g := $db/guide[ssn eq $t/guide/ssn]
-         return <Tour lang="{$t/language/name}" time="{$t/start}" guide="{$g/name}"/>
+         return <Tour date="{$date}" time="{$t/start}" lang="{$t/language/name}" guide="{$g/name}"/>
         }
-      </Date>
-    }
   </Exhibition>
 }
 </Results>
